@@ -1,4 +1,4 @@
 *.config
-inwxns.d/*.conf
-global_config.cfg
+*.conf
+*.cfg
 *.log

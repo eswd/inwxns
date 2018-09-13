@@ -1,4 +1,3 @@
-
 # Login credentials for the inwx admin interface
 INWX_USER="USERNAME"
 INWX_PASS="PASSWORD"

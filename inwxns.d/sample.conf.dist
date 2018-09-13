@@ -1,5 +1,3 @@
-# nsupdate.config
-
 # Use IPv6 connection.
 IPV6="YES"
 
