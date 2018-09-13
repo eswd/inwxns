@@ -1,6 +1,6 @@
 # Login credentials for the inwx admin interface
 INWX_USER="USERNAME"
-INWX_PASS="PASSWORD"
+INWX_PASS='PASSWORD'
 
 # From which site should we get your WAN IP?
 IP_CHECK_SITE="icanhazip.com"

@@ -30,8 +30,7 @@
 # check required tools
 command -v dig >/dev/null 2>&1 || { echo >&2 "dig is required. install dig via dnsutils (e.g.debian) or bind-tools (e.g. alpine linux)."; exit 1; }
 
-LOG=ns.log
-source global_config.cfg
+source global.conf
 
 # get current ip addresses
 current_IPv4=$(curl -s -4 $IP_CHECK_SITE)
@@ -94,7 +93,7 @@ for f in inwxns.d/*.conf
          echo "$(date) - $DOMAIN IPv4 updated. Old IP: "$old_IP "New IP: "$WAN_IP >> $LOG
        elif [[ (! "$current_IPv6" == "$old_IP") && "$IPV6" == "YES" ]]; then
          curl -silent -v -XPOST -H"Content-Type: application/xml" -d "$API_XML" https://api.domrobot.com/xmlrpc/
-          echo "$(date) - $DOMAIN IPv6 updated. Old IP: "$old_IP "New IP: "$WAN_IP >> $LOG
+         echo "$(date) - $DOMAIN IPv6 updated. Old IP: "$old_IP "New IP: "$WAN_IP >> $LOG
        else
          echo "$(date) - No update needed for $DOMAIN. Current IP: "$WAN_IP >> $LOG
       fi
