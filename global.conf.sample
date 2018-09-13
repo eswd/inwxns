@@ -5,5 +5,5 @@ INWX_PASS='PASSWORD'
 # From which site should we get your WAN IP?
 IP_CHECK_SITE="icanhazip.com"
 
-# Log file name.
-LOG="inwx_update.log"
+# Log file name, leave empty to disable logging.
+LOG="inwxns.log"

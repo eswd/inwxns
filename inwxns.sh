@@ -36,6 +36,11 @@ source global.conf
 current_IPv4=$(curl -s -4 $IP_CHECK_SITE)
 current_IPv6=$(curl -s -6 $IP_CHECK_SITE)
 
+# logging
+if [[ "$LOG" == ""  ]]; then
+    LOG="/dev/null"
+fi
+
 
 # Loop through configs
 for f in inwxns.d/*.conf
