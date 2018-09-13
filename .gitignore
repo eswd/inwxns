@@ -1,0 +1,4 @@
+*.config
+inwx.d/*.conf
+global_config.cfg
+*.log

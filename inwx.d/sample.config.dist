@@ -1,0 +1,10 @@
+# nsupdate.config
+
+# Use IPv6 connection.
+IPV6="YES"
+
+# The hostname that you want to update and it's ID from the inwx interface.
+# Note: You can get the domain ID while editing the given nameserver entry by
+#       inspecting the target URL of the save button.
+DOMAIN="domainname"
+INWX_DOMAIN_ID="123456789"
