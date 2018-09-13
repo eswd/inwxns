@@ -39,7 +39,7 @@ current_IPv6=$(curl -s -6 $IP_CHECK_SITE)
 
 
 # Loop through configs
-for f in inwx.d/*.conf
+for f in inwxns.d/*.conf
    do
       source $f
 
