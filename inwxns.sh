@@ -30,7 +30,7 @@
 # check required tools
 command -v dig >/dev/null 2>&1 || { echo >&2 "dig is required. install dig via dnsutils (e.g.debian) or bind-tools (e.g. alpine linux)."; exit 1; }
 
-source global.conf
+source $(dirname $0)/global.conf
 
 # get current ip addresses
 current_IPv4=$(curl -s -4 $IP_CHECK_SITE)
@@ -39,11 +39,12 @@ current_IPv6=$(curl -s -6 $IP_CHECK_SITE)
 # logging
 if [[ "$LOG" == ""  ]]; then
     LOG="/dev/null"
+  else LOG=$(dirname $0)/$LOG
 fi
 
 
 # Loop through configs
-for f in inwxns.d/*.conf
+for f in $(dirname $0)/inwxns.d/*.conf
    do
       source $f
 
