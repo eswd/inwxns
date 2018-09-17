@@ -56,56 +56,63 @@ for f in $(dirname $0)/inwxns.d/*.conf
 	      old_IP=$(dig @ns.inwx.de $DOMAIN AAAA +short)
          WAN_IP=$current_IPv6
       fi
+
+      # don't bother the inwx-api if something went wrong
+      if [[ "$WAN_IP" = "" || "$old_IP" = "" ]]; then
+        echo "$(date) - Something went wrong with $DOMAIN ! WAN_IP: $WAN_IP , Old_IP = $old_IP " >> $LOG
+        continue
+      else
       
-      API_XML="<?xml version=\"1.0\"?>
-      <methodCall>
-         <methodName>nameserver.updateRecord</methodName>
-         <params>
-            <param>
-               <value>
-                  <struct>
-                     <member>
-                        <name>user</name>
-                        <value>
-                           <string>$INWX_USER</string>
-                        </value>
-                     </member>
-                     <member>
-                        <name>pass</name>
-                        <value>
-                           <string>$INWX_PASS</string>
-                        </value>
-                     </member>
-                     <member>
-                        <name>id</name>
-                        <value>
-                           <int>$INWX_DOMAIN_ID</int>
-                        </value>
-                     </member>
-                     <member>
-                        <name>content</name>
-                        <value>
-                           <string>$WAN_IP</string>
-                        </value>
-                     </member>
-                  </struct>
-               </value>
-            </param>
-         </params>
-      </methodCall>"
+        API_XML="<?xml version=\"1.0\"?>
+        <methodCall>
+           <methodName>nameserver.updateRecord</methodName>
+           <params>
+              <param>
+                 <value>
+                    <struct>
+                       <member>
+                          <name>user</name>
+                          <value>
+                             <string>$INWX_USER</string>
+                          </value>
+                       </member>
+                       <member>
+                          <name>pass</name>
+                          <value>
+                             <string>$INWX_PASS</string>
+                          </value>
+                       </member>
+                       <member>
+                          <name>id</name>
+                          <value>
+                             <int>$INWX_DOMAIN_ID</int>
+                          </value>
+                       </member>
+                       <member>
+                          <name>content</name>
+                          <value>
+                             <string>$WAN_IP</string>
+                          </value>
+                       </member>
+                    </struct>
+                 </value>
+              </param>
+           </params>
+        </methodCall>"
 
-      if [[ (! "$current_IPv4" == "$old_IP") && "$IPV6" == "NO" ]]; then
-         curl -silent -v -XPOST -H"Content-Type: application/xml" -d "$API_XML" https://api.domrobot.com/xmlrpc/
-         echo "$(date) - $DOMAIN IPv4 updated. Old IP: "$old_IP "New IP: "$WAN_IP >> $LOG
-       elif [[ (! "$current_IPv6" == "$old_IP") && "$IPV6" == "YES" ]]; then
-         curl -silent -v -XPOST -H"Content-Type: application/xml" -d "$API_XML" https://api.domrobot.com/xmlrpc/
-         echo "$(date) - $DOMAIN IPv6 updated. Old IP: "$old_IP "New IP: "$WAN_IP >> $LOG
-       else
-         echo "$(date) - No update needed for $DOMAIN. Current IP: "$WAN_IP >> $LOG
+        if [[ (! "$current_IPv4" == "$old_IP") && "$IPV6" == "NO" ]]; then
+           curl -silent -v -XPOST -H"Content-Type: application/xml" -d "$API_XML" https://api.domrobot.com/xmlrpc/
+           echo "$(date) - $DOMAIN IPv4 updated. Old IP: "$old_IP "New IP: "$WAN_IP >> $LOG
+         elif [[ (! "$current_IPv6" == "$old_IP") && "$IPV6" == "YES" ]]; then
+           curl -silent -v -XPOST -H"Content-Type: application/xml" -d "$API_XML" https://api.domrobot.com/xmlrpc/
+           echo "$(date) - $DOMAIN IPv6 updated. Old IP: "$old_IP "New IP: "$WAN_IP >> $LOG
+         else
+           echo "$(date) - No update needed for $DOMAIN. Current IP: "$WAN_IP >> $LOG
+        fi
+
+        unset old_IP
+        unset DOMAIN
+        unset WAN_IP
+        unset INWX_DOMAIN_ID
       fi
-
-      unset old_IP
-      unset DOMAIN
-      unset WAN_IP
-      unset INWX_DOMAIN_ID
     done
