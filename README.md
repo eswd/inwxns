@@ -1,8 +1,8 @@
 # Nameserver update for INWX
 
-Shell script for updating you A and AAAA records at inwx [inwx](https://www.inwx.de/) with your current IPs.
+Shell script for updating your A and AAAA records at inwx [inwx](https://www.inwx.de/) with your current IPs.
 
-This repo is a fork from nsupdate by Christian Busch (https://github.com/chrisb86/nsupdate.git), adapted to my needs.
+This repo is a hork from nsupdate by Christian Busch (https://github.com/chrisb86/nsupdate.git), adapted to my needs.
 
 Main difference:
 * only A and AAAA records
